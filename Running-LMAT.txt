@@ -4,8 +4,9 @@ You can (1) Assign Taxonomic labels to reads
 	and (3) Generate content (tax/gene) summaries to put in MEGAN or R 
 
 Here's the order of scripts to use:
-0. Optional: filter your data if not already filtered. We used https://github.com/ghedin-lab/human-16s-phix-filter
-1. seqtk.sh --- LMAT-preprocessing
+0. Optional: filter your data if not already filtered. Prior to LMAT, our files were filtered for contaminating human, rRNA, and phix reads using SortMeRNA and DeconSeq.
+   	     We used https://github.com/ghedin-lab/human-16s-phix-filter
+1. seqtk.sh --- LMAT-preprocessing (convert interleaved fastq files to fasta and mask low quality reads)
 2. lmat.sh --- LMAT taxonomic labels
 2a. Move files from $file.lmat subdirectories into one directory
 3. lmat-sumlist.sh --- create lists of fastsummary files for each sample
@@ -13,13 +14,6 @@ Here's the order of scripts to use:
 4a. Renamed all files to get rid of "non-rRNA.deconseq_clean.mask.fasta.kML+Human.v4-14.20.g10.db."
 5. lmat-out-flst.sh --- generate list of .out files for each sample
 6. lmat-pull_rank.sh --- pulls all reads for a given taxid list and generates a fasta file
-7. --- python script to pull reads of interest from paired fastq files
+7. lmat-extract-paired-reads-from-fasta.sh --- runs python script to pull reads of interest from paired fastq files
+   Requires: extract-paired-reads-from-fasta.py
 8. Now you have reads subsetted by genera (or whichever rank) to use for downstream analysis (like assembly)
-
-Prior to LMAT, our files were filtered for contaminating human, rRNA, and phix reads using SortMeRNA and DeconSeq.
-For LMAT, we used interleaved filtered .fasta files masked for low quality reads, which requires some conversion using seqtk.
-
-Use the seqtk.sh script to:
-    convert interleaved fastq files to fasta and mask low quality reads
-
-Then, you can use lmat.sh to perform the first LMAT analysis: assignment of taxonomic labels.
