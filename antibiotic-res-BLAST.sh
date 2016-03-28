@@ -11,9 +11,17 @@
 file=$1
 
 dir="/scratch/at120/shared/gabby-alan/2015-10-01_C8364ACXX-redo/antbiotic-resistance"
+#Metatranscriptome Path:
 path="/scratch/at120/shared/gabby-alan/2015-10-01_C8364ACXX-redo/filtered-data"
+#Metagenome Pathe:
+mg="/scratch/at120/shared/gabby-alan/metagenome/filtered-fasta"
 
 cd $dir
+
+#ARG-ANNOT: database abbreviations
+# AGly, aminoglycosides; Bla, beta-lactamases; Fos, fosfomycin; 
+# Flq, fluoroquinolones; Gly, glycopeptides; MLS, macrolide-lincosamide-streptogramin; 
+# Phe, phenicols; Rif, rifampin; Sul, sulfonamides; Tet, tetracyclines; and Tmt, trimethoprim. 
 
 module load blast+
 
@@ -25,9 +33,14 @@ module load blast+
 #makeblastdb -in file -out name -dbtype prot/nucl -hash_index for a database of DNA or RNA
 #makeblastdb -in argannot-nt_doc.fasta -out antibiotic-resistance -dbtype nucl -hash_index -parse_seqids
 
-#3. blastn to custom databas
-blastn -task blastn -query $path/$file.non-rRNA.deconseq_clean.mask.fasta -out $dir/$file.ARgene.blast.tsv -outfmt 6 -evalue 0.00001 -max_target_seqs 1 -culling_limit 2 -num_threads 12 -db $dir/antibiotic-resistance
+#3. blastn to custom database
+#Metatranscriptome:
+#blastn -task blastn -query $path/$file.non-rRNA.deconseq_clean.mask.fasta -out $dir/$file.ARgene.blast.tsv -outfmt 6 -evalue 0.00001 -max_target_seqs 1 -culling_limit 2 -num_threads 12 -db $dir/antibiotic-resistance
    
+#Metagenome:
+blastn -task blastn -query $mg/$file.interleaved.deconseq_clean.mask.fasta  -out $dir/$file.ARgene.blast.tsv -outfmt 6 -evalue 0.00001 -max_target_seqs 1 -culling_limit 2 -num_threads 12 -db $dir/antibiotic-resistance
+
+
 exit 0;
 
 
