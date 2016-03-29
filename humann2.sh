@@ -16,10 +16,10 @@ out="/scratch/at120/shared/gabby-alan/2015-10-01_C8364ACXX-redo/ANNOTATION"
 reads="/scratch/at120/shared/gabby-alan/2015-10-01_C8364ACXX-redo/filtered-data"
 
 #bunzip2 $file.non-rRNA.deconseq_clean.mask.fasta.bz2
+#humann2 --input $reads/$file.non-rRNA.deconseq_clean.mask.fasta --output $out/$file.reads-humann2 --input-format fasta --threads 12
 
-humann2 --input $reads/$file.non-rRNA.deconseq_clean.mask.fasta --output $out/$file.reads-humann2 --input-format fasta --threads 12
-
-#humann2 --input $contigs/$file.mapped.fasta --output $out/$file.humann2 --threads 12
+#using fasta file from reads mapped to contigs (converted bam to fasta)
+humann2 --input $contigs/$file.mapped.fasta --output $out/$file.humann2 --threads 12
 
 
 exit 0;
